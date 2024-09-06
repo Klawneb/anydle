@@ -1,0 +1,8 @@
+﻿import {Artist, ArtistSearchResponse} from "~/types";
+
+const uri = "https://api.deezer.com/"
+
+export async function searchArtists(searchQuery: string): Promise<ArtistSearchResponse> {
+    const res = await fetch(`${uri}/search/artist?q=${searchQuery}`);
+    return (await res.json()) as ArtistSearchResponse;
+}

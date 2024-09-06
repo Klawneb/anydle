@@ -1,12 +1,11 @@
-﻿import YTMusic, {ArtistDetailed, ArtistFull} from "ytmusic-api"
+﻿import {searchArtists} from "~/deezer-api";
 import {NextRequest} from "next/server";
-import {youtubeMusic} from "~/YTMusic";
 
 export async function GET(req: NextRequest) {
     const searchQuery = req.nextUrl.searchParams.get("searchQuery");
-    let searchResults: ArtistDetailed[] = []
-    if (searchQuery) {
-        searchResults = await youtubeMusic.searchArtists(searchQuery);
+    if (!searchQuery) {
+        return Response.json([]);
     }
-    return Response.json(searchResults);
+    const artists = await searchArtists(searchQuery);
+    return Response.json(artists);
 }
