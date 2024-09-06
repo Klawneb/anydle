@@ -5,6 +5,7 @@ import {Input} from "@nextui-org/input";
 import {Autocomplete, AutocompleteItem} from "@nextui-org/autocomplete";
 import Image from "next/image";
 import {Artist, ArtistSearchResponse} from "~/types";
+import {Title} from "~/components/Title";
 
 export default function HomePage() {
     const [searchResults, setSearchResults] = useState<Artist[]>([]);
@@ -23,8 +24,9 @@ export default function HomePage() {
     
 
     return (
-        <div className={"w-screen h-screen flex items-center justify-center"}>
-            <div className={"w-[500px] h-full"}>
+        <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
+            <Title selectedArtist={selectedArtist?.name}/>
+            <div className={"w-[500px] h-full mt-8"}>
                 <Autocomplete
                     label="Artist Search"
                     onInputChange={handleSearch}
@@ -43,12 +45,6 @@ export default function HomePage() {
                         })
                     }
                 </Autocomplete>
-                {
-                    selectedArtist &&
-                    <div>
-                        <p>{selectedArtist.name}</p>
-                    </div>
-                }
             </div>
         </div>
     );

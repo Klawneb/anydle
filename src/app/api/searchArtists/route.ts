@@ -1,4 +1,4 @@
-﻿import {searchArtists} from "~/deezer-api";
+﻿import {searchArtists} from "~/deezerAPI";
 import {NextRequest} from "next/server";
 
 export async function GET(req: NextRequest) {
