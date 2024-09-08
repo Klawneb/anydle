@@ -10,7 +10,7 @@ export function Title({ selectedArtist }: TitleProps) {
     })
     
 
-    return <div className={"flex w-screen justify-center text-9xl font-black truncate "}>
+    return <div className={"flex w-screen justify-center text-9xl font-black truncate h-40"}>
         <div className={"bg-gradient-to-br from-cyan-100 to-blue-600 bg-clip-text text-transparent"}>
             {
                 selectedArtist ?

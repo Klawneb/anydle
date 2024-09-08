@@ -3,25 +3,30 @@ import {Button} from "@nextui-org/button";
 import {Progress} from "@nextui-org/progress";
 import {useState} from "react";
 import {useStopwatch, useTimer} from "react-use-precision-timer";
+import {FaPlay} from "react-icons/fa";
 
 interface SongControllerProps {
-    songSrc: string
+    songSrc: string,
+    guessNumber: number,
 }
 
-const time = new Date();
+function getGuessTime(guessNum: number) {
+    if (guessNum === 0) {
+        return 1;
+    }
+    return ((guessNum*guessNum) + guessNum + 2) / 2
+}
 
-export function SongController({songSrc}: SongControllerProps) {
+export function SongController({songSrc, guessNumber}: SongControllerProps) {
     const [timerProgress, setTimerProgress] = useState<number>(0);
-    const [timerLength, setTimerLength] = useState(1000);
-    const [timerIncrease, setTimerIncrease] = useState<number>(1000);
     const [play, {stop}] = useSound(songSrc, {
         volume: 0.2
     })
     const stopwatch = useStopwatch();
-    const renderTimer = useTimer({delay: 10, }, () => {
+    const renderTimer = useTimer({delay: 10}, () => {
         if (stopwatch.isRunning()){
             setTimerProgress(stopwatch.getElapsedRunningTime())
-            if (stopwatch.getElapsedRunningTime() > timerLength) {
+            if (stopwatch.getElapsedRunningTime() > getGuessTime(guessNumber)*1000) {
                 stop()
                 stopwatch.stop()
             }
@@ -29,37 +34,35 @@ export function SongController({songSrc}: SongControllerProps) {
     })
 
     const markers = [6.25,12.5,25,43.75,68.75];
-    
-    
 
-    return <div className={"w-full flex flex-col"}>
+    return <div className={"w-full flex flex-col my-4 "}>
         <div className="relative w-full">
-            <Progress label={`Current Time: ${timerLength/1000}s`} maxValue={16000} value={timerProgress} disableAnimation={true}/>
+            <Progress classNames={{
+                indicator: "rounded-none"
+            }} maxValue={16000} value={timerProgress} disableAnimation={true}/>
             {markers.map((marker, index) => (
                 <div
                     key={index}
-                    className="absolute h-3 w-0.5 top-8 bg-content4"
+                    className="absolute h-3 w-0.5 bg-content4 -top-[0px]"
                     style={{
                         left: `${marker}%`,
                         transform: "translateX(-50%)",
                     }}
-                ></div>
+                />
             ))}
         </div>
-        <div className={"flex w-full justify-around my-2"}>
-            <Button onPress={() => {
-                stop()
-                play()
-                renderTimer.start();
-                stopwatch.start();
-            }}>Play</Button>
-            <Button onPress={() =>  {
-                if (timerLength >= 16000) {
-                    return
-                }
-                setTimerLength(prev => prev + timerIncrease);
-                setTimerIncrease(prev => prev + 1000);
-            }}>Skip (+{timerIncrease/1000}s)</Button>
+        <div className={"flex w-full justify-between items-center my-2"}>
+            <p className={"w-10"}>0:{timerProgress < 9500 ? "0" : ""}{(timerProgress / 1000).toFixed(0)}</p>
+            <Button
+                color={"primary"}
+                endContent={<FaPlay/>}
+                onPress={() => {
+                    stop()
+                    play()
+                    renderTimer.start();
+                    stopwatch.start();
+                }}>Play</Button>
+            <p className={"w-10"}>0:16</p>
         </div>
     </div>
 }

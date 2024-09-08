@@ -27,7 +27,7 @@ export default function HomePage() {
     return (
         <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
             <Title selectedArtist={selectedArtist?.name}/>
-            <div className={"w-[500px] h-full mt-8"}>
+            <div className={"w-[500px] h-full mt-8 flex flex-col"}>
                 <Autocomplete
                     label="Artist Search"
                     onInputChange={handleSearch}

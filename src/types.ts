@@ -4,7 +4,7 @@
     next: string
 }
 
-export interface TopSongsResponse {
+export interface SongResponse {
     data: Song[]
     total: number
 }
