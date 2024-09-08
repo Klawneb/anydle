@@ -6,6 +6,7 @@ import {Autocomplete, AutocompleteItem} from "@nextui-org/autocomplete";
 import Image from "next/image";
 import {Artist, ArtistSearchResponse} from "~/types";
 import {Title} from "~/components/Title";
+import {GuessingGame} from "~/components/GuessingGame";
 
 export default function HomePage() {
     const [searchResults, setSearchResults] = useState<Artist[]>([]);
@@ -18,7 +19,7 @@ export default function HomePage() {
     }
 
     function handleSelection(key: React.Key | null) {
-        const selected = searchResults.find((artist) => artist.id === Number(key));
+        const selected = searchResults.find((artist) => artist.id.toString() === key);
         setSelectedArtist(selected ? selected : null);
     }
     
@@ -45,6 +46,7 @@ export default function HomePage() {
                         })
                     }
                 </Autocomplete>
+                { selectedArtist && <GuessingGame artist={selectedArtist}/> }
             </div>
         </div>
     );

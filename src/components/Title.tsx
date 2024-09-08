@@ -6,16 +6,15 @@ interface TitleProps {
 }
 export function Title({ selectedArtist }: TitleProps) {
     const [bandTypewriter] = useTypewriter({
-        words: selectedArtist ? [selectedArtist] : bandList,
+        words: bandList,
     })
     
-    console.log(selectedArtist);
 
     return <div className={"flex w-screen justify-center text-9xl font-black truncate "}>
         <div className={"bg-gradient-to-br from-cyan-100 to-blue-600 bg-clip-text text-transparent"}>
             {
                 selectedArtist ?
-                    <Typewriter  words={[selectedArtist]} loop={1}/>
+                    <p>{selectedArtist}</p>
                     :
                     <p>{bandTypewriter}</p>
             }
