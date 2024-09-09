@@ -34,12 +34,13 @@ export function GuessingGame({artist}: GuessingGameProps) {
         
         resetGame()
         void fetchSongs();
-    }, [artist.id, songList.length]);
+    }, [artist.id, resetGame, songList, songList.length]);
     
     function resetGame() {
         setGuessNumber(0);
         setGuessList([null, null, null, null, null]);
-        setGameOver(false)
+        setGameOver(false);
+        setGameWon(false);
         if (songList.length > 0) {
             setSelectedSong(songList[Math.floor(Math.random() * songList.length)])
         }
