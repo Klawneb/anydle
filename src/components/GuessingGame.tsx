@@ -34,7 +34,7 @@ export function GuessingGame({artist}: GuessingGameProps) {
         
         resetGame()
         void fetchSongs();
-    }, [artist.id, resetGame, songList, songList.length]);
+    }, [artist.id, songList.length]);
     
     function resetGame() {
         setGuessNumber(0);
