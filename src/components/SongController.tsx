@@ -1,7 +1,7 @@
 ﻿import useSound from "use-sound";
 import {Button} from "@nextui-org/button";
 import {Progress} from "@nextui-org/progress";
-import {useState} from "react";
+import {useEffect} from "react";
 import {useStopwatch, useTimer} from "react-use-precision-timer";
 import {FaPlay} from "react-icons/fa";
 import {useAtom, atom} from "jotai";
@@ -24,7 +24,7 @@ export function SongController({songSrc, guessNumber}: SongControllerProps) {
     const [timerProgress, setTimerProgress] = useAtom<number>(timerProgressAtom);
     const [play, {stop}] = useSound(songSrc, {
         volume: 0.2
-    })
+    }, )
     const stopwatch = useStopwatch();
     const renderTimer = useTimer({delay: 10}, () => {
         if (stopwatch.isRunning()){
@@ -35,6 +35,12 @@ export function SongController({songSrc, guessNumber}: SongControllerProps) {
             }
         }
     })
+
+    useEffect(() => {
+        return () => {
+            stop();
+        }
+    }, [stop]);
 
     const markers = [6.25,12.5,25,43.75,68.75];
 

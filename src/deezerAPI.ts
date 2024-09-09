@@ -1,4 +1,4 @@
-﻿import {Artist, ArtistSearchResponse, Song, SongResponse} from "~/types";
+﻿import {type ArtistSearchResponse, type Song, type SongResponse} from "~/types";
 
 const uri = "https://api.deezer.com"
 

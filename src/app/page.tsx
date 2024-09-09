@@ -1,10 +1,8 @@
 "use client"
-import {useEffect, useState} from "react";
-import {Button} from "@nextui-org/button";
-import {Input} from "@nextui-org/input";
+import {useState} from "react";
 import {Autocomplete, AutocompleteItem} from "@nextui-org/autocomplete";
 import Image from "next/image";
-import {Artist, ArtistSearchResponse} from "~/types";
+import {type Artist, type ArtistSearchResponse} from "~/types";
 import {Title} from "~/components/Title";
 import {GuessingGame} from "~/components/GuessingGame";
 

@@ -1,4 +1,4 @@
-﻿import {Typewriter, useTypewriter} from "react-simple-typewriter";
+﻿import {useTypewriter} from "react-simple-typewriter";
 import {bandList} from "~/data/bandList";
 
 interface TitleProps {

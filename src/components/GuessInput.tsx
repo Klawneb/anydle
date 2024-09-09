@@ -1,6 +1,6 @@
 import {Autocomplete, AutocompleteItem} from "@nextui-org/autocomplete";
-import {Song, SongResponse} from "~/types";
-import {Dispatch, SetStateAction, useState} from "react";
+import {type Song, type SongResponse} from "~/types";
+import {useState} from "react";
 import {Button} from "@nextui-org/button";
 import {timerProgressAtom} from "~/components/SongController";
 import {useAtom} from "jotai";
