@@ -16,3 +16,14 @@ export async function searchSongs(searchQuery: string): Promise<SongResponse> {
     const res = await fetch(`${uri}/search?q=${searchQuery}&order=RANKING`);
     return (await res.json()) as SongResponse;
 }
+
+export function filterSongs(songs: Song[]) {
+    const seenSongs = new Set<string>()
+    return songs.filter((song) => {
+        if (seenSongs.has(`${song.title_short} ${song.artist.name}`)) {
+            return false
+        }
+        seenSongs.add(`${song.title_short} ${song.artist.name}`);
+        return true;
+    })
+}

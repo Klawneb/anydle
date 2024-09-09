@@ -4,6 +4,9 @@ import {Progress} from "@nextui-org/progress";
 import {useState} from "react";
 import {useStopwatch, useTimer} from "react-use-precision-timer";
 import {FaPlay} from "react-icons/fa";
+import {useAtom, atom} from "jotai";
+
+export const timerProgressAtom = atom<number>(0)
 
 interface SongControllerProps {
     songSrc: string,
@@ -18,7 +21,7 @@ function getGuessTime(guessNum: number) {
 }
 
 export function SongController({songSrc, guessNumber}: SongControllerProps) {
-    const [timerProgress, setTimerProgress] = useState<number>(0);
+    const [timerProgress, setTimerProgress] = useAtom<number>(timerProgressAtom);
     const [play, {stop}] = useSound(songSrc, {
         volume: 0.2
     })
@@ -39,7 +42,12 @@ export function SongController({songSrc, guessNumber}: SongControllerProps) {
         <div className="relative w-full">
             <Progress classNames={{
                 indicator: "rounded-none"
-            }} maxValue={16000} value={timerProgress} disableAnimation={true}/>
+            }} 
+                      maxValue={16000} 
+                      value={timerProgress} 
+                      disableAnimation={true}
+                      aria-label={"Progress"}
+            />
             {markers.map((marker, index) => (
                 <div
                     key={index}
@@ -57,8 +65,8 @@ export function SongController({songSrc, guessNumber}: SongControllerProps) {
                 color={"primary"}
                 endContent={<FaPlay/>}
                 onPress={() => {
-                    stop()
-                    play()
+                    stop();
+                    play();
                     renderTimer.start();
                     stopwatch.start();
                 }}>Play</Button>
