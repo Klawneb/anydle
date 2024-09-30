@@ -19,7 +19,7 @@ export async function getSongs(artistID: string) {
 
 export async function searchSongs(query: SearchQuery): Promise<SongResponse> {
     let search = encodeURIComponent(query.search);
-    if (query.artist) search = `artist:"${encodeURIComponent(query.artist)}" ${search}`;
+    if (query.artist) search = `artist:"${encodeURIComponent(query.artist)}" track:"${search}"`;
 
     const res = await fetch(`${uri}/search?q=${search}&order=RANKING`);
     return (await res.json()) as SongResponse;
