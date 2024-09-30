@@ -4,7 +4,7 @@ import {Progress} from "@nextui-org/progress";
 import {useEffect} from "react";
 import {useStopwatch, useTimer} from "react-use-precision-timer";
 import {FaPlay} from "react-icons/fa";
-import {useAtom, atom} from "jotai";
+import {atom, useAtom} from "jotai";
 
 export const timerProgressAtom = atom<number>(0)
 
@@ -17,19 +17,19 @@ function getGuessTime(guessNum: number) {
     if (guessNum === 0) {
         return 1;
     }
-    return ((guessNum*guessNum) + guessNum + 2) / 2
+    return ((guessNum * guessNum) + guessNum + 2) / 2
 }
 
 export function SongController({songSrc, guessNumber}: SongControllerProps) {
     const [timerProgress, setTimerProgress] = useAtom<number>(timerProgressAtom);
     const [play, {stop}] = useSound(songSrc, {
         volume: 0.2
-    }, )
+    },)
     const stopwatch = useStopwatch();
     const renderTimer = useTimer({delay: 10}, () => {
-        if (stopwatch.isRunning()){
+        if (stopwatch.isRunning()) {
             setTimerProgress(stopwatch.getElapsedRunningTime())
-            if (stopwatch.getElapsedRunningTime() > getGuessTime(guessNumber)*1000) {
+            if (stopwatch.getElapsedRunningTime() > getGuessTime(guessNumber) * 1000) {
                 stop()
                 stopwatch.stop()
             }
@@ -42,15 +42,15 @@ export function SongController({songSrc, guessNumber}: SongControllerProps) {
         }
     }, [stop]);
 
-    const markers = [6.25,12.5,25,43.75,68.75];
+    const markers = [6.25, 12.5, 25, 43.75, 68.75];
 
     return <div className={"w-full flex flex-col my-4 "}>
         <div className="relative w-full">
             <Progress classNames={{
                 indicator: "rounded-none"
-            }} 
-                      maxValue={16000} 
-                      value={timerProgress} 
+            }}
+                      maxValue={16000}
+                      value={timerProgress}
                       disableAnimation={true}
                       aria-label={"Progress"}
             />

@@ -20,22 +20,22 @@ export function GuessingGame({artist}: GuessingGameProps) {
     const [selectedSong, setSelectedSong] = useState<Song | undefined>(undefined);
     const [gameWon, setGameWon] = useState(false);
     const [gameOver, setGameOver] = useState<boolean>(false);
-    
+
     useEffect(() => {
         async function fetchSongs() {
             setIsFetchingSongs(true);
             const res = await fetch(`/api/getSongs?artistID=${artist.id}`);
             const songs = (await res.json()) as SongResponse;
-            
+
             setSongList(filterSongs(songs.data));
             setIsFetchingSongs(false);
             console.log(songList)
         }
-        
+
         resetGame()
         void fetchSongs();
     }, [artist.id, songList.length]);
-    
+
     function resetGame() {
         setGuessNumber(0);
         setGuessList([null, null, null, null, null]);
@@ -69,7 +69,7 @@ export function GuessingGame({artist}: GuessingGameProps) {
         }
         setGuessNumber(prev => prev + 1);
     }
-    
+
     if (gameOver && selectedSong) {
         return <div className={"flex flex-col bg-content2 rounded-xl my-10 items-center"}>
             {
@@ -79,7 +79,8 @@ export function GuessingGame({artist}: GuessingGameProps) {
                     <p className={"text-center text-xl font-bold text-danger pt-4"}>Better luck next time!</p>
             }
             <div className={"flex px-4 w-full"}>
-                <Image className={"my-auto rounded-lg"} src={selectedSong.album.cover} alt={selectedSong.title_short + " cover"} width={140} height={140}/>
+                <Image className={"my-auto rounded-lg"} src={selectedSong.album.cover}
+                       alt={selectedSong.title_short + " cover"} width={140} height={140}/>
                 <div className={"flex flex-col p-4 mr-auto"}>
                     <p className={"py-2 font-bold text-2xl"}>{selectedSong.title}</p>
                     <p className={"py-2 text-large"}>{selectedSong.album.title}</p>
@@ -110,8 +111,8 @@ export function GuessingGame({artist}: GuessingGameProps) {
                                 return <div key={index}
                                             className={"flex pl-4 items-center w-full rounded-xl bg-content2 h-12 my-4"}>
                                     {
-                                        guess === null ? 
-                                            <p>{index + 1}.</p> 
+                                        guess === null ?
+                                            <p>{index + 1}.</p>
                                             :
                                             <div className={"flex items-center"}>
                                                 <RiCloseLargeLine className="mr-2 w-6 h-6 fill-danger"/>
@@ -124,7 +125,7 @@ export function GuessingGame({artist}: GuessingGameProps) {
                     </div>
                     <div className={"mt-auto"}>
                         <SongController songSrc={selectedSong.preview} guessNumber={guessNumber}/>
-                        <GuessInput guessNumber={guessNumber} makeGuess={makeGuess}/>
+                        <GuessInput guessNumber={guessNumber} makeGuess={makeGuess} artist={artist}/>
                     </div>
                 </div>
                 : null
