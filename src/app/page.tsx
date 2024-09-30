@@ -20,7 +20,7 @@ export default function HomePage() {
         const selected = searchResults.find((artist) => artist.id.toString() === key);
         setSelectedArtist(selected ? selected : null);
     }
-    
+
 
     return (
         <div className={"w-screen h-screen flex flex-col items-center justify-center"}>
@@ -44,7 +44,7 @@ export default function HomePage() {
                         })
                     }
                 </Autocomplete>
-                { selectedArtist && <GuessingGame artist={selectedArtist}/> }
+                {selectedArtist && <GuessingGame artist={selectedArtist}/>}
             </div>
         </div>
     );

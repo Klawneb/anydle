@@ -1,11 +1,12 @@
-import { searchSongs} from "~/deezerAPI";
+import {searchSongs} from "~/deezerAPI";
 import {type NextRequest} from "next/server";
 
 export async function GET(req: NextRequest) {
-    const searchQuery = req.nextUrl.searchParams.get("searchQuery");
-    if (!searchQuery) {
+    const search = req.nextUrl.searchParams.get("searchQuery");
+    const artist = req.nextUrl.searchParams.get("artist")
+    if (!search) {
         return Response.json([]);
     }
-    const songs = await searchSongs(searchQuery);
+    const songs = await searchSongs({search, artist});
     return Response.json(songs);
 }

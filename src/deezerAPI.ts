@@ -2,6 +2,11 @@
 
 const uri = "https://api.deezer.com"
 
+type SearchQuery = {
+    search: string
+    artist: string | null
+}
+
 export async function searchArtists(searchQuery: string): Promise<ArtistSearchResponse> {
     const res = await fetch(`${uri}/search/artist?q=${searchQuery}`);
     return (await res.json()) as ArtistSearchResponse;
@@ -12,8 +17,11 @@ export async function getSongs(artistID: string) {
     return (await res.json()) as SongResponse;
 }
 
-export async function searchSongs(searchQuery: string): Promise<SongResponse> {
-    const res = await fetch(`${uri}/search?q=${searchQuery}&order=RANKING`);
+export async function searchSongs(query: SearchQuery): Promise<SongResponse> {
+    let search = encodeURIComponent(query.search);
+    if (query.artist) search = `artist:"${encodeURIComponent(query.artist)}" ${search}`;
+
+    const res = await fetch(`${uri}/search?q=${search}&order=RANKING`);
     return (await res.json()) as SongResponse;
 }
 
